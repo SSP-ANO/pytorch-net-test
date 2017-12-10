@@ -22,7 +22,7 @@ class neuralNetwork:
 		# w12 w22 etc
 		self.wih = numpy.random.normal(0.0,pow(self.hnodes, -0.5), (self.hnodes,self.inodes))
 		self.who = numpy.random.normal(0.0,pow(self.onodes, -0.5), (self.onodes,self.hnodes))
-		
+	
 		# learning rate
 		self.lr = learningrate	
 
@@ -34,21 +34,11 @@ class neuralNetwork:
 	# train the neural network
 	def train(self, inputs_list, targets_list):
 
-            # convert inputs list to 2d array
-            inputs = numpy.array(inputs_list, ndmin=2).T
+            # performing query
+            final_outputs = self.query(inputs_list)
+
+            # 2d array creation
             targets = numpy.array(targets_list, ndmin=2).T
-
-            # calculate signals into hidden layer
-            hidden_inputs = numpy.dot(self.wih, inputs)
-
-            # calculate the signals emerging from hidden layer
-	    hidden_outputs = self.activation_function(hidden_inputs)
-
-            # calculate signals into final output layer
-            final_inputs = numpy.dot(self.who, hidden_outputs)
-
-            # calculate the signals emerging from final output layer
-            final_outputs = self.activation_function(final_inputs)
 
             # output layer error is the (target - actual)
             output_errors = targets - final_outputs
@@ -69,10 +59,10 @@ class neuralNetwork:
 		
 		# converts input list to 2d array
                 inputs = numpy.array(inputs_list, ndmin=2).T
-
+                
                 # calculate signals into hidden layer
                 hidden_inputs = numpy.dot(self.wih, inputs)
-
+                
                 # calculate the signals emerging from hidden layer
                 hidden_outputs = self.activation_function(hidden_inputs)
 
@@ -94,4 +84,6 @@ learning_rate = 0.3
 n = neuralNetwork(input_nodes,hidden_nodes,output_nodes, learning_rate)
 
 # test query (doesn't mean anything useful yet)
-n.query([1.0, 0.5, -1.5])
+t = n.query([1.0, 0.5, -1.5])
+
+print(t)
